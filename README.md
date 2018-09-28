@@ -20,7 +20,7 @@ Utilizando essa biblioteca você pode integrar o PagHiper no seu sistema e utili
 Você pode instalar a biblioteca via composer:
 
 ```
-composer require webmasterdro/paghiper-laravel
+composer require webmasterdro/paghiper-php-sdk
 ```
 
 Adicione suas credenciais (`token` e `apiKey`) em `src\Core\Configuration\Configuration.php`.(Para obtê-las basta ir no seu painel:  [https://www.paghiper.com/painel/credenciais/](https://www.paghiper.com/painel/credenciais/))
