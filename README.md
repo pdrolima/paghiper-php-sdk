@@ -18,7 +18,7 @@ Utilizando essa biblioteca você pode integrar o PagHiper no seu sistema e utili
 Você pode instalar a biblioteca via composer:
 
 ```
-composer require webmasterdro/paghiper-php
+composer require webmasterdro/paghiper-php-sdk
 ```
 
 Para configurar suas credenciais basta adicionar em `src\Core\Configuration\Configuration.php`. (Para obter suas credenciais `token` e `apiKey` basta ir no painel:  [https://www.paghiper.com/painel/credenciais/](https://www.paghiper.com/painel/credenciais/)
