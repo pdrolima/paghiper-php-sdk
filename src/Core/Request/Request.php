@@ -14,10 +14,10 @@ class Request
     protected $response;
 
     /**
-     * Envia uma requisição para a API do PagHiper
+     * Send a request to PagHiper's API.
      *
-     * @param string $endpoint Recurso da API (exemplo: /transaction/create/)
-     * @param array $params Parâmetros necessários para o endpoint. https://dev.paghiper.com/reference
+     * @param string $endpoint API resource (exemplo: /transaction/create/)
+     * @param array $params Resource params. Can be found at: https://dev.paghiper.com/reference
      */
     public function __construct(string $endpoint = '', array $params = [])
     {
@@ -34,12 +34,13 @@ class Request
             ],
         ]);
 
-        // Acrescenta o token e apiKey
+        //  Add token and apiKey
         $params = array_merge([
             'token' => $credentials::TOKEN,
             'apiKey' => $credentials::API_KEY,
         ], $params);
 
+        // Send the request
         $request = $client->request('POST', $endpoint, [
             'json' => $params,
         ]);
@@ -50,7 +51,7 @@ class Request
     }
 
     /**
-     * Pega a resposta do PagHiper
+     * Get PagHiper's response.
      *
      * @return void
      */

@@ -5,7 +5,7 @@ namespace WebMaster\PagHiper\Core\Interfaces;
 interface BankAccountsInterface
 {
     /**
-     * Lista as contas bancárias para saque via API.
+     * Retrieves a list of bank accounts.
      *
      * @return void
      */

@@ -5,9 +5,11 @@ namespace WebMaster\PagHiper\Core\Interfaces;
 interface NotificationInterface
 {
     /**
-     *  Pega a resposta da notificação (retorno automático) do PagHiper.
+     * Get notification's response.
      *
+     * @param string $notificationId  
+     * @param string $transactionId 
      * @return void
      */
-    public function response(array $data);
+    public function response(string $notificationId = '', string $transactionId = '');
 }

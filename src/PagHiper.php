@@ -8,7 +8,6 @@ use WebMaster\PagHiper\v1\Payment\Notification\Notification;
 
 class PagHiper
 {
-    protected $request;
     protected $billet;
     protected $bank;
     protected $notification;

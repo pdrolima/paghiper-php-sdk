@@ -3,6 +3,7 @@
 namespace WebMaster\PagHiper\v1\Bank;
 
 use WebMaster\PagHiper\Core\Request\Request;
+use WebMaster\PagHiper\Core\Exceptions\PagHiperException;
 use WebMaster\PagHiper\Core\Interfaces\BankAccountsInterface;
 
 class Accounts implements BankAccountsInterface
@@ -10,7 +11,7 @@ class Accounts implements BankAccountsInterface
     protected $accountsUri = '/bank_accounts/list/';
 
     /**
-     * Lista as contas bancárias para saque via API.
+     * Retrieves a list of bank accounts.
      *
      * @return void
      */
@@ -18,6 +19,12 @@ class Accounts implements BankAccountsInterface
     {
         $bankAccounts = new Request($this->accountsUri);
 
-        return $bankAccounts->getResponse()['bank_account_list_request'];
+        $response = $bankAccounts->getResponse()['bank_account_list_request'];
+
+        if ($response['result'] === 'reject') {
+            throw new PagHiperException($response['response_message'], $response['http_code']);
+        }
+
+        return $response;
     }
 }

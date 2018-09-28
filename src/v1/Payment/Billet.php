@@ -4,22 +4,21 @@ namespace WebMaster\PagHiper\v1\Payment;
 
 use GuzzleHttp\Client;
 use WebMaster\PagHiper\Core\Request\Request;
-use WebMaster\PagHiper\Core\Interfaces\BoletoInterface;
+use WebMaster\PagHiper\Core\Interfaces\BilletInterface;
 use WebMaster\PagHiper\Core\Configuration\Configuration;
 use WebMaster\PagHiper\Core\Exceptions\PagHiperException;
 
-class Billet implements BoletoInterface
+class Billet implements BilletInterface
 {
     protected $createUri = '/transaction/create/';
     protected $cancelUri = '/transaction/cancel/';
 
     /**
-     * Realiza a emissão do boleto
-     *
-     * @param array $data Dados para geração do boleto. Os dados necessários para gerar o boleto
-     * podem ser encontrados em: https://dev.paghiper.com/reference#gerar-boleto
-     * @return void
-     */
+    * Create a new billet.
+    *
+    * @param array $data Billet data. Full list of all available data can be found at: https://dev.paghiper.com/reference#gerar-boleto
+    * @return void
+    */
     public function create(array $data)
     {
         $request = new Request($this->createUri, $data);
@@ -34,21 +33,26 @@ class Billet implements BoletoInterface
     }
 
     /**
-    * Efetua o cancelamento boleto.
+    * Cancels a billet.
     *
-    * @param array $data Dados para cancelamento do boleto. Os dados para cancelar o boleto podem ser encontrados em:
-    * https://dev.paghiper.com/reference#boleto
+    * @param string $transactionId Transaction ID to cancel.
     * @return boolean
     */
-    public function cancel(array $data)
+    public function cancel(string $transactionId)
     {
-        // Define o status da transação com 'canceled'
-        $data = array_merge([
+        $data = [
+            'transaction_id' => $transactionId,
             'status' => 'canceled'
-        ], $data);
+        ];
 
         $request = new Request($this->cancelUri, $data);
 
-        return $request->getResponse()['cancellation_request'];
+        $response = $request->getResponse()['cancellation_request'];
+
+        if ($response['result'] === 'reject') {
+            throw new PagHiperException($response['response_message'], $response['http_code']);
+        }
+
+        return $response;
     }
 }

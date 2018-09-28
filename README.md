@@ -59,9 +59,7 @@ Você pode obter a lista de dados que você pode enviar no seguinte link: [https
 use WebMaster\PagHiper\PagHiper;
 
 $pagHiper = new PagHiper();
-$transaction = $pagHiper->billet()->cancel([
-     'transaction_id' => 'JKP03X9KN0RELVLH',
- ]);
+$transaction = $pagHiper->billet()->cancel('JKP03X9KN0RELVLH');
 ```
 
 **Para obter informações do pagamento via retorno automático:**
@@ -70,10 +68,7 @@ $transaction = $pagHiper->billet()->cancel([
 use WebMaster\PagHiper\PagHiper;
 
 $pagHiper = new PagHiper();
-$transaction = $pagHiper->notification()->response([
-    'notification_id' => $_POST['notification_id'],
-    'transaction_id' => $_POST['idTransacao']
-]);
+$transaction = $pagHiper->notification()->response($_POST['notification_id'], $_POST['idTransacao']);
 ``` 
 
 **Para obter a lista de suas contas bancárias:**
