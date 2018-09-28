@@ -3,6 +3,8 @@
 [![StyleCI](https://github.styleci.io/repos/150681419/shield?branch=master)](https://github.styleci.io/repos/150681419)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/webmasterdro/paghiper-php-sdk/maintainability)
 
+Se você estiver usando o Laravel [(clique aqui) :fire:](https://github.com/webmasterdro/paghiper-laravel)
+
 ## Descrição
 
 Utilizando essa biblioteca você pode integrar o PagHiper no seu sistema e utilizar os recursos que o PagHiper fornece em sua API, deixando seu código mais legível e manutenível.
@@ -21,7 +23,7 @@ Você pode instalar a biblioteca via composer:
 composer require webmasterdro/paghiper-php-sdk
 ```
 
-Para configurar suas credenciais basta adicionar em `src\Core\Configuration\Configuration.php`. (Para obter suas credenciais `token` e `apiKey` basta ir no painel:  [https://www.paghiper.com/painel/credenciais/](https://www.paghiper.com/painel/credenciais/)
+Adicione suas credenciais (`token` e `apiKey`) em `src\Core\Configuration\Configuration.php`.(Para obtê-las basta ir no seu painel:  [https://www.paghiper.com/painel/credenciais/](https://www.paghiper.com/painel/credenciais/))
 
 ## Utilizando
 
@@ -36,7 +38,7 @@ $pagHiper = new PagHiper();
 $transaction = $pagHiper->billet()->create([
     'order_id' => 'ABC-456-789',
     'payer_name' => 'Pedro Lima',
-    'payer_email' => 'omprador@email.com',
+    'payer_email' => 'comprador@email.com',
     'payer_cpf_cnpj' => '1234567891011',
     'type_bank_slip' => 'boletoa4',
     'days_due_date' => '3',
