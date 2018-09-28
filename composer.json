@@ -1,0 +1,22 @@
+{
+    "name": "webmasterdro/paghiper-php-sdk",
+    "description": "Biblioteca de integração PHP doCLE PagHiper",
+    "keywords": [
+        "paghiper"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pedro Lima",
+            "email": "pedro-octavio@hotmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "WebMaster\\PagHiper\\": "src/"
+        }
+    }
+}
