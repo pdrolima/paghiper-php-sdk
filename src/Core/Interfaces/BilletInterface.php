@@ -12,7 +12,7 @@ interface BilletInterface
      */
     public function create(array $data);
 
-     /**
+    /**
     * Cancels a billet.
     *
     * @param string $transactionId Transaction ID to cancel.
