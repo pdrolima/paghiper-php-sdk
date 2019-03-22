@@ -3,8 +3,6 @@
 [![StyleCI](https://github.styleci.io/repos/150681419/shield?branch=master)](https://github.styleci.io/repos/150681419)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/webmasterdro/paghiper-php-sdk/maintainability)
 
-Se você estiver usando o Laravel [(clique aqui) :fire:](https://github.com/webmasterdro/paghiper-laravel)
-
 ## Descrição
 
 Utilizando essa biblioteca você pode integrar o PagHiper no seu sistema e utilizar os recursos que o PagHiper fornece em sua API, deixando seu código mais legível e manutenível.
@@ -12,8 +10,12 @@ Utilizando essa biblioteca você pode integrar o PagHiper no seu sistema e utili
 **Esta biblioteca tem suporte aos seguintes recursos:**
 - [Emissão de boleto](https://dev.paghiper.com/reference#gerar-boleto)
 - [Cancelamento de boleto](https://dev.paghiper.com/reference#boleto)
+- [Consultar status do boleto](https://dev.paghiper.com/reference#status-do-boleto)
 - [Receber notificações automáticas (Retorno Automático)](https://dev.paghiper.com/reference#qq)
+- [Realizar saques para conta bancária](https://dev.paghiper.com/reference#testinput)
 - [Listar contas bancárias](https://dev.paghiper.com/reference#lista-contas-banc%C3%A1rias-para-saque-via-api)
+- [Listar transações](https://dev.paghiper.com/reference#listar-transa%C3%A7%C3%B5es-via-api-1)
+- [Múltiplos boletos](https://dev.paghiper.com/reference#multiplos-boletos-unico-pdf)
 
 ## Instalação
 
@@ -23,9 +25,9 @@ Você pode instalar a biblioteca via composer:
 composer require webmasterdro/paghiper-php-sdk
 ```
 
-Adicione suas credenciais (`token` e `apiKey`) em `src\Core\Configuration\Configuration.php`.(Para obtê-las basta ir no seu painel:  [https://www.paghiper.com/painel/credenciais/](https://www.paghiper.com/painel/credenciais/))
-
 ## Utilizando
+
+Antes de utilizar, obtenha suas credenciais (`apiKey` e `token`) em [https://www.paghiper.com/painel/credenciais/](https://www.paghiper.com/painel/credenciais/)
 
 ### Emissão de Boleto
 
@@ -34,8 +36,8 @@ Adicione suas credenciais (`token` e `apiKey`) em `src\Core\Configuration\Config
 ```php
 use WebMaster\PagHiper\PagHiper;
 
-$pagHiper = new PagHiper();
-$transaction = $pagHiper->billet()->create([
+$paghiper = new PagHiper('api_key', 'token');
+$transaction = $paghiper->billet()->create([
     'order_id' => 'ABC-456-789',
     'payer_name' => 'Pedro Lima',
     'payer_email' => 'comprador@email.com',
@@ -56,26 +58,36 @@ Você pode obter a lista de dados que você pode enviar no seguinte link: [https
 **Para cancelar um boleto:**
 
 ```php
-use WebMaster\PagHiper\PagHiper;
+$transaction = $paghiper->billet()->cancel('JKP03X9KN0RELVLH');
+```
+**Para consultar o status de um boleto:**
 
-$pagHiper = new PagHiper();
-$transaction = $pagHiper->billet()->cancel('JKP03X9KN0RELVLH');
+```php
+$transaction = $paghiper->billet()->status('JKP03X9KN0RELVLH');
+```
+
+**Para gerar múltiplos boletos em único PDF:**
+
+```php
+$transaction = $paghiper->billet()->multiple([
+    'id_transacao'
+], 'boletoCarne');
 ```
 
 **Para obter informações do pagamento via retorno automático:**
 
 ```php
-use WebMaster\PagHiper\PagHiper;
-
-$pagHiper = new PagHiper();
-$transaction = $pagHiper->notification()->response($_POST['notification_id'], $_POST['idTransacao']);
-``` 
+$transaction = $paghiper->notification()->response($_POST['notification_id'], $_POST['idTransacao']);
+```
 
 **Para obter a lista de suas contas bancárias:**
 
 ```php
-use WebMaster\PagHiper\PagHiper;
+$banckAccounts = $paghiper->banking()->accounts();
+```
 
-$pagHiper = new PagHiper();
-$banckAccounts = $pagHiper->bank()->accounts();
-``` 
+**Para realizar um saque:**
+
+```php
+$banckAccounts = $paghiper->banking()->withdraw('id_conta_bancaria');
+```

@@ -2,27 +2,91 @@
 
 namespace WebMaster\PagHiper;
 
-use WebMaster\PagHiper\v1\Payment\Billet;
-use WebMaster\PagHiper\v1\Bank\Accounts as BankAccounts;
-use WebMaster\PagHiper\v1\Payment\Notification\Notification;
+use WebMaster\PagHiper\Core\Payment\Billet;
+use WebMaster\PagHiper\Core\Payment\Notification;
+use WebMaster\PagHiper\Core\Bank\Banking;
+use GuzzleHttp\Client;
 
 class PagHiper
 {
-    protected $billet;
-    protected $bank;
-    protected $notification;
+    /**
+     * @var  WebMaster\PagHiper\Core\Payment\Billet;
+     */
+    private $billet;
 
-    public function __construct()
-    {
-        $this->billet = new Billet();
-        $this->bank = new BankAccounts();
-        $this->notification = new Notification();
+    /**
+     * @var WebMaster\PagHiper\Core\Payment\Notification;
+     */
+    private $notification;
+
+    /**
+     * @var WebMaster\PagHiper\Core\Bank\Banking;
+     */
+    private $banking;
+
+    /**
+     * @var array PagHiper credentials
+     */
+    private $credentials;
+
+    /**
+     * @var GuzzleHttp\Client;
+     */
+    private $client;
+
+
+    public function __construct(
+        $apiKey,
+        $token
+    ) {
+        $this->credentials = [
+            'apiKey' => $apiKey,
+            'token' => $token
+        ];
+
+        $this->client = new Client([
+            'base_uri' => 'http://api.paghiper.com',
+            'defaults' => [
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Accept-Charset' => 'UTF-8',
+                    'Accept-Encoding' => 'application/json',
+                    'Content-Type' => 'application/json'
+                ],
+            ],
+        ]);
+
+
+        $this->billet = new Billet($this);
+        $this->banking = new Banking($this);
+        $this->notification = new Notification($this);
     }
 
     /**
-     * This method is responsible for actions related to billets. You can use to create or cancel a billet.
+     * Send a request to PagHiper's API.
      *
-     * @return \WebMaster\PagHiper\Core\Payment\Boleto
+     * @param  string  $uri  Endpoint
+     * @param  array  $params Data for the given endpoint.
+     */
+    public function request($uri, $data = [])
+    {
+        $data = array_merge($this->credentials, $data);
+
+        try {
+            $response = $this->client->request(
+                'POST',
+                $uri,
+                ['json' => $data]
+            );
+
+            return json_decode($response->getBody(), true);
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
+    /**
+     * @var WebMaster\PagHiper\Core\Payment\Billet;
      */
     public function billet()
     {
@@ -30,23 +94,18 @@ class PagHiper
     }
 
     /**
-     * This method is responsible for actions related to bank. You can use to
-     * get a list of your bank accounts.
-     *
-     * @return void
-     */
-    public function bank()
-    {
-        return $this->bank;
-    }
-
-    /**
-     * This method is responsible for receive and parses PagHiper's notification (Payment Notification)
-     *
-     * @return void
+     * @var WebMaster\PagHiper\Core\Payment\Notification;
      */
     public function notification()
     {
         return $this->notification;
+    }
+
+    /**
+     * @var WebMaster\PagHiper\Core\Bank\Banking;
+     */
+    public function banking()
+    {
+        return $this->banking;
     }
 }
