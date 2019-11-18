@@ -16,7 +16,7 @@ class Billet extends Resource
     * Create a new billet.
     *
     * @param array $data Billet data.
-    * @return void
+    * @return array
     */
     public function create(array $data = [])
     {
@@ -36,7 +36,7 @@ class Billet extends Resource
     * Cancel a billet with the given transaction ID.
     *
     * @param string $transactionId Transaction ID to cancel.
-    * @return void
+    * @return array
     */
     public function cancel(string $transaction_id)
     {

@@ -12,7 +12,7 @@ class Notification extends Resource
     /**
      *  Get notification response.
      *
-     * @return void
+     * @return array
      */
     public function response(string $notificationId, string $transactionId)
     {

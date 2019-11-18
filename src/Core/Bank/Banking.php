@@ -14,7 +14,7 @@ class Banking extends Resource
     * Withdraw cash to the given bank account.
     *
     * @param string $transactionId Transaction ID to cancel.
-    * @return boolean
+    * @return array
     */
     public function accounts()
     {
@@ -33,7 +33,7 @@ class Banking extends Resource
     * Withdraw cash to the given bank account.
     *
     * @param string $transactionId Transaction ID to cancel.
-    * @return boolean
+    * @return array
     */
     public function withdraw(int $bank_account_id)
     {
