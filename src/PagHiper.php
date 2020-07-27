@@ -45,7 +45,7 @@ class PagHiper
         ];
 
         $this->client = new Client([
-            'base_uri' => 'http://api.paghiper.com',
+            'base_uri' => 'https://api.paghiper.com',
             'defaults' => [
                 'headers' => [
                     'Accept' => 'application/json',
