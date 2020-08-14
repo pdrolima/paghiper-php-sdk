@@ -23,14 +23,14 @@ Utilizando essa biblioteca você pode integrar o PagHiper no seu sistema e utili
 
  Versão | webmasterdro/paghiper-php-sdk | PHP | guzzlehttp/guzzle
 :---------|:----------|:----------|:----------
- **3.x**  | `composer require webmasterdro/paghiper-php-sdk:^3.0` | PHP >= 7.2 | Guzzle >= 7
+ **3.x**  | `composer require webmasterdro/paghiper-php-sdk:^3.0` | PHP >= 7.2 | Guzzle >= 6.3.x
  2.x  | `composer require webmasterdro/paghiper-php-sdk:^2.0` | PHP >= 5.6 | Guzzle >= 6.3.x < 7.0.0
 
 
 Execute o comando
 
 ```php
-composer require webmasterdro/paghiper-php-sdk:^2.0
+composer require clembet/paghiper-php-sdk:^2.0
 ```
 
 ## Utilizando
