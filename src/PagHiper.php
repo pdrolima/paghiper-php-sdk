@@ -97,7 +97,7 @@ class PagHiper
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
-           throw $e;
+            throw $e;
         }
     }
 

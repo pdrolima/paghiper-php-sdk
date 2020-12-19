@@ -5,8 +5,8 @@ namespace WebMaster\PagHiper\Core\Pix;
 use WebMaster\PagHiper\Core\Resource;
 use WebMaster\PagHiper\Core\Exceptions\PagHiperException;
 
-class Pix extends Resource {
-
+class Pix extends Resource
+{
     const PIX_CREATE_ENDPOINT = '/invoice/create';
     const PIX_CANCEL_ENDPOINT = '/invoice/cancel';
     const PIX_STATUS_ENDPOINT = '/invoice/status';
