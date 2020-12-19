@@ -5,10 +5,13 @@ namespace WebMaster\PagHiper;
 use WebMaster\PagHiper\Core\Payment\Billet;
 use WebMaster\PagHiper\Core\Payment\Notification;
 use WebMaster\PagHiper\Core\Bank\Banking;
+use WebMaster\PagHiper\Core\Pix\Pix;
 use GuzzleHttp\Client;
+use Exception;
 
 class PagHiper
 {
+
     /**
      * @var  WebMaster\PagHiper\Core\Payment\Billet;
      */
@@ -35,17 +38,29 @@ class PagHiper
     private $client;
 
 
+    /**
+     * PagHiper
+     *
+     * @param string $apiKey Your Api Key
+     * @param string $token Your Token
+     * @param string $operation The operation mode. Accepted values are 'api' (default for Boleto) or 'pix'.
+     */
     public function __construct(
         $apiKey,
-        $token
+        $token,
+        $operation = 'api'
     ) {
         $this->credentials = [
             'apiKey' => $apiKey,
             'token' => $token
         ];
 
+        if (! in_array($operation, ['pix', 'api'])) {
+            throw new Exception('Unsupported operation type. The operation type should be "pix" or "api".');
+        }
+
         $this->client = new Client([
-            'base_uri' => 'https://api.paghiper.com',
+            'base_uri' => "https://$operation.paghiper.com",
             'defaults' => [
                 'headers' => [
                     'Accept' => 'application/json',
@@ -60,6 +75,7 @@ class PagHiper
         $this->billet = new Billet($this);
         $this->banking = new Banking($this);
         $this->notification = new Notification($this);
+        $this->pix = new Pix($this);
     }
 
     /**
@@ -81,7 +97,7 @@ class PagHiper
 
             return json_decode($response->getBody(), true);
         } catch (\Exception $e) {
-            throw $e;
+           throw $e;
         }
     }
 
@@ -107,5 +123,10 @@ class PagHiper
     public function banking()
     {
         return $this->banking;
+    }
+
+    public function pix()
+    {
+        return $this->pix;
     }
 }

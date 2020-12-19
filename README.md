@@ -16,6 +16,7 @@ Utilizando essa biblioteca você pode integrar o PagHiper no seu sistema e utili
 - [Listar contas bancárias](https://dev.paghiper.com/reference#lista-contas-banc%C3%A1rias-para-saque-via-api)
 - [Listar transações](https://dev.paghiper.com/reference#listar-transa%C3%A7%C3%B5es-via-api-1)
 - [Múltiplos boletos](https://dev.paghiper.com/reference#multiplos-boletos-unico-pdf)
+- [Pix](https://dev.paghiper.com/reference#emiss%C3%A3o-de-pix-paghiper)
 
 ## Instalação
 
@@ -36,6 +37,18 @@ composer require webmasterdro/paghiper-php-sdk:^2.0
 ## Utilizando
 
 Antes de utilizar, obtenha suas credenciais (`apiKey` e `token`) em [https://www.paghiper.com/painel/credenciais/](https://www.paghiper.com/painel/credenciais/)
+
+### Pix
+
+**Para utilizar a nova modalidade de pagamento (PIX)** você só precisa fazer isto:
+
+```php
+$paghiper = new PagHiper('api_key', 'token', 'píx');
+$paghiper->pix()->create([]);
+$paghiper->pix()->status('transaction_id');
+$paghiper->pix()->cancel('transaction_id');
+$paghiper->pix()->notification($_POST['notification_id'], $_POST['idTransacao']);
+```
 
 ### Emissão de Boleto
 
