@@ -20,7 +20,7 @@ class Pix extends Resource
             $data
         );
 
-        if ($createTransaction['result'] === 'reject') {
+        if ($createTransaction['pix_create_request']['result'] === 'reject') {
             throw new PagHiperException($createTransaction['response_message'], 400);
         }
 
@@ -37,7 +37,7 @@ class Pix extends Resource
             ]
         )['cancellation_request'];
 
-        if ($cancelTransaction['result'] === 'reject') {
+        if ($cancelTransaction['pix_create_request']['result'] === 'reject') {
             throw new PagHiperException($cancelTransaction['response_message'], 400);
         }
 
@@ -53,7 +53,7 @@ class Pix extends Resource
             ]
         )['status_request'];
 
-        if ($transactionStatus['result'] === 'reject') {
+        if ($transactionStatus['pix_create_request']['result'] === 'reject') {
             throw new PagHiperException($transactionStatus['response_message'], 400);
         }
 
@@ -75,7 +75,7 @@ class Pix extends Resource
             ]
         )['status_request'];
 
-        if ($paymentNotification['result'] === 'reject') {
+        if ($paymentNotification['pix_create_request']['result'] === 'reject') {
             throw new PagHiperException($paymentNotification['response_message'], 400);
         }
 
