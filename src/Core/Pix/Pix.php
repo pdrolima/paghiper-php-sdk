@@ -75,7 +75,7 @@ class Pix extends Resource
             ]
         )['status_request'];
 
-        if ($paymentNotification['pix_create_request']['result'] === 'reject') {
+        if ($paymentNotification['result'] === 'reject') {
             throw new PagHiperException($paymentNotification['response_message'], 400);
         }
 
